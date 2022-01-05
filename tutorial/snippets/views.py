@@ -113,10 +113,13 @@ class SnippetList(generics.ListCreateAPIView):
 #         return JsonResponse(serializer.errors, status=400)
 
 
+from snippets.permissions import IsOwnerOrReadOnly
+
 class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                      IsOwnerOrReadOnly]
 
 
 # class SnippetDetail(mixins.RetrieveModelMixin,
